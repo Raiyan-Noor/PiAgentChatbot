@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env.local
+.env*.local
+*.log
+bench-results.json
+.DS_Store

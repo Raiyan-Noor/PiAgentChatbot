@@ -1,0 +1,52 @@
+{
+  "name": "pi-agent-chatbot",
+  "private": true,
+  "type": "module",
+  "description": "Minimal chatbot: one Daytona sandbox per thread running the Pi agent, Convex as the control plane.",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "postinstall": "cd runner && npm install --no-audit --no-fund",
+    "dev": "run-p -l dev:convex dev:web",
+    "dev:convex": "convex dev",
+    "dev:web": "vite --config web/vite.config.ts",
+    "build:web": "vite build --config web/vite.config.ts",
+    "build:runner": "node runner/build.mjs",
+    "snapshot": "tsx infra/snapshot.ts",
+    "env:push": "tsx scripts/env-push.ts",
+    "bench": "tsx scripts/bench.ts",
+    "e2e:local": "tsx scripts/e2e-local.ts",
+    "e2e:daytona": "tsx scripts/e2e-daytona.ts",
+    "spike:pi": "npm --prefix runner run spike:pi",
+    "spike:daytona": "tsx infra/spikeDaytona.ts",
+    "typecheck": "tsc -p convex/tsconfig.json --noEmit && tsc -p web/tsconfig.json --noEmit && tsc -p tsconfig.scripts.json --noEmit && npm --prefix runner run typecheck",
+    "lint": "eslint .",
+    "test": "vitest run && npm --prefix runner test"
+  },
+  "dependencies": {
+    "@daytona/sdk": "0.214.0",
+    "convex": "^1.46.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@edge-runtime/vm": "5.0.0",
+    "@eslint/js": "10.0.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "22.20.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "convex-test": "0.0.58",
+    "eslint": "10.10.0",
+    "globals": "17.12.0",
+    "npm-run-all2": "9.0.3",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.0",
+    "vite": "8.3.0",
+    "vitest": "5.0.1"
+  }
+}
